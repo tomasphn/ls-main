@@ -1,0 +1,35 @@
+a method that returns the sum of two integers
+  create method that has two integer variables as parameters
+  add both variables together
+  return the result
+
+a method that takes an array of strings, and returns a string that is all those strings concatenated together
+  create method that takes a single array as input
+  create a string variable
+  set it to equal the concatenation of the strings within the array
+  return the string
+
+a method that takes an array of integers, and returns a new array with every other element from the original array, starting with the first element. For instance:
+  create a method that takes a single array as input
+  for each element in the array
+  if the index is even
+  remove the element
+  return the array
+
+a method that determines the index of the 3rd occurrence of a given character in a string. For instance, if the given character is 'x' and the string is 'axbxcdxex', the method should return 6 (the index of the 3rd 'x'). If the given character does not occur at least 3 times, return nil.
+  create a method that takes two strings as input, one word and oine character
+  set a variable to equal the word string split into an array by character
+  for each element in the character
+  if that element is equal to the input char 
+  add its index to a new array
+  if the index array has at least 3 items
+  return the 3rd item in the array
+  if not 
+  return nil
+
+a method that takes two arrays of numbers and returns the result of merging the arrays. The elements of the first array should become the elements at the even indexes of the returned array, while the elements of the second array should become the elements at the odd indexes. For instance:
+  create a method that takes two arrays as input
+  for each element in the first array 
+  add the element to a new array
+  then add an element from the second array with the same index as the current element
+  return the new array
