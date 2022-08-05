@@ -2,7 +2,7 @@ def valid_input(message)
   puts message
   loop do
     ans = gets.chomp
-    ans.to_i.to_s == ans || ans == '0' ? (return ans.to_i) : (puts 'Please enter a valid number')
+    ans.to_i.to_s == ans && ans.to_i > 0 ? (return ans.to_i) : (puts 'Please enter a valid number')
   end
 end
 
