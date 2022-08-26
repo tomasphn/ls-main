@@ -43,12 +43,12 @@ end
 
 array = [5, 3]
 p bubble_sort!(array)
-array == [3, 5]
+#array == [3, 5]
 
 array = [6, 2, 7, 1, 4]
 p bubble_sort!(array)
-array == [1, 2, 4, 6, 7]
+#array == [1, 2, 4, 6, 7]
 
 array = %w(Sue Pete Alice Tyler Rachel Kim Bonnie)
 p bubble_sort!(array)
-array == %w(Alice Bonnie Kim Pete Rachel Sue Tyler)
+#array == %w(Alice Bonnie Kim Pete Rachel Sue Tyler)
