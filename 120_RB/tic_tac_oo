@@ -17,29 +17,23 @@ class Move
   end
 
   def >(other_move)
-    if rock?
-      return true if other_move.scissors?
-      return false
-    elsif paper?
-      return true if other_move.rock?
-      return false
-    elsif scissors?
-      return true if other_move.paper?
-      return false
+    if rock? && other_move.scissors? ||
+      paper? && other_move.rock? ||
+      scissors? && other_move.paper?
+      return true
     end
+
+    false
   end
 
   def <(other_move)
-    if rock?
-      return true if other_move.paper?
-      return false
-    elsif paper?
-      return true if other_move.scissors?
-      return false
-    elsif scissors?
-      return true if other_move.rock?
-      return false
+    if rock? && other_move.paper? ||
+       paper? && other_move.scissors? ||
+       scissors? && other_move.rock?
+      return true
     end
+
+    false
   end
 
   def to_s
@@ -62,6 +56,7 @@ class Human < Player
       puts "What's your name?"
       n = gets.chomp
       break unless n.empty?
+
       puts "Sorry, must enter a value."
     end
     self.name = n
@@ -90,8 +85,6 @@ class Computer < Player
   end
 end
 
-
-
 class RPSGame
   attr_accessor :human, :computer
 
@@ -113,6 +106,7 @@ class RPSGame
   def display_winner
     puts "#{human.name} chose #{human.move}"
     puts "#{computer.name} chose #{computer.move}"
+
     if human.move > computer.move
       puts "#{human.name} won!"
     elsif human.move < computer.move
