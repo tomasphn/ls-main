@@ -32,7 +32,7 @@ class Board
   end
 
   def full?
-   unmarked_keys.empty?
+    unmarked_keys.empty?
   end
 
   def someone_won?
