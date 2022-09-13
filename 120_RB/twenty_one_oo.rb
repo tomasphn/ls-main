@@ -1,5 +1,5 @@
 require 'pry'
-class Hand 
+class Hand
   attr_reader :cards
 
   def initialize
@@ -177,9 +177,8 @@ class Deck
     participant.hand << deck.shift
   end
 
-  def double_deal(participant, other_participant)
-    deal(participant)
-    deal(other_participant)
+  def deal_to_table(participants_array)
+    participants_array.each { |participant| deal(participant) }
   end
 
   def show_deck
@@ -218,8 +217,8 @@ class Game
   end
 
   def opening_deal
-    deck.double_deal(player, dealer)
-    deck.double_deal(player, dealer)
+    deck.deal_to_table(participants)
+    deck.deal_to_table(participants)
   end
 
   def take_turn(participant)
