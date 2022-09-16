@@ -1,3 +1,5 @@
+#Accept this...
+
 require 'pry'
 class Hand
   attr_reader :cards
