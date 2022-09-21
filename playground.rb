@@ -1,267 +1,132 @@
-class Card
-  include Comparable
-
-  attr_reader :rank, :suit, :value
-
-  def initialize(rank, suit)
-    @rank = rank
-    @suit = suit
-    @value = find_value
+# The relationship between a class and modules
+module Royalty
+  def initialize
+    @title = "Noble"
   end
 
-  def <=>(other_card)
-    value <=> other_card.value
-  end
-
-  def find_value
-    return rank if rank.is_a? Integer
-
-    case rank
-    when "Jack"
-      11
-    when "Queen"
-      12
-    when "King"
-      13
-    when "Ace"
-      14
-    end
-  end
-
-  def to_s
-    "#{rank} of #{suit}"
+  def announce_self
+    puts "Here comes the magnificent #{@title}"
   end
 end
 
-class Deck
-  RANKS = ((2..10).to_a + %w(Jack Queen King Ace)).freeze
-  SUITS = %w(Hearts Clubs Diamonds Spades).freeze
-
-  attr_reader :deck
+class King
+  include Royalty
 
   def initialize
-    reset
-    shuffle_deck
-  end
-
-  def reset
-    @deck = new_deck
-  end
-
-  def new_deck
-    RANKS.each_with_object([]) do |rank, arr|
-      SUITS.each do |suit|
-        arr << Card.new(rank, suit)
-      end
-    end
-  end
-
-  def shuffle_deck
-    deck.shuffle!
-  end
-
-  def draw
-    reset if deck.empty?
-    deck.shift
+    @title = "King"
   end
 end
 
-# Include Card and Deck classes from the last two exercises.
+class Queen
+  include Royalty
 
-class PokerHand
-  HAND_SIZE = 5
-
-  attr_reader :hand, :deck, :rank_tally, :values, :suits_tally
-
-  def initialize(hand_array)
-    @deck = Deck.new
-    @hand = hand_array
-    @rank_tally = find_ranks
-    @values = find_values
-    @suits_tally = find_suits
-  end
-
-  # def new_hand
-  #   @hand = [] 
-  #   HAND_SIZE.times { hand << deck.draw }
-  # end
-
-  def find_ranks
-    hand.map(&:rank).tally
-  end
-
-  def find_suits
-    hand.map(&:suit).tally
-  end
-
-  def find_values
-    hand.map(&:value)
-  end
-
-  def unique_values?
-    values.uniq == values
-  end
-
-  def print
-    hand.each { |card| puts card}
-  end
-
-  def evaluate
-    case
-    when royal_flush?     then 'Royal flush'
-    when straight_flush?  then 'Straight flush'
-    when four_of_a_kind?  then 'Four of a kind'
-    when full_house?      then 'Full house'
-    when flush?           then 'Flush'
-    when straight?        then 'Straight'
-    when three_of_a_kind? then 'Three of a kind'
-    when two_pair?        then 'Two pair'
-    when pair?            then 'Pair'
-    else                       'High card'
-    end
-  end
-
-  private
-
-  def royal_flush?
-    straight_flush? && hand.max.rank == 'Ace'
-  end
-
-  def straight_flush?
-    straight? && flush?
-  end
-
-  def four_of_a_kind?
-    rank_tally.any? { |rank, count| count == 4 }
-  end
-
-  def full_house?
-    three_of_a_kind? && two_pair?
-  end
-
-  def flush?
-    suits_tally.any? { |suit, count| count == 5 }
-  end
-
-  def straight?
-    unique_values? && (values.min + 4 == values.max)
-  end
-
-  def three_of_a_kind?
-    rank_tally.any? { |rank, count| count == 3 }
-  end
-
-  def two_pair?
-    pairs = rank_tally.count { |rank, count| count > 1 }
-    pairs > 1
-  end
-
-  def pair?
-    rank_tally.any? { |rank, count| count == 2 }
+  def initialize
+    @title = "Queen"
   end
 end
 
+class Squire
+  include Royalty
 
-# Test that we can identify each PokerHand type.
-hand = PokerHand.new([
-  Card.new(10,      'Hearts'),
-  Card.new('Ace',   'Hearts'),
-  Card.new('Queen', 'Hearts'),
-  Card.new('King',  'Hearts'),
-  Card.new('Jack',  'Hearts')
-])
-puts hand.evaluate
-puts hand.evaluate == 'Royal flush'
+  def initialize
+    @title = "Squire"
+  end
+end
 
-hand = PokerHand.new([
-  Card.new(8,       'Clubs'),
-  Card.new(9,       'Clubs'),
-  Card.new('Queen', 'Clubs'),
-  Card.new(10,      'Clubs'),
-  Card.new('Jack',  'Clubs')
-])
-puts hand.evaluate
-puts hand.evaluate == 'Straight flush'
+class Royal
+  include Royalty
+end
 
-hand = PokerHand.new([
-  Card.new(3, 'Hearts'),
-  Card.new(3, 'Clubs'),
-  Card.new(5, 'Diamonds'),
-  Card.new(3, 'Spades'),
-  Card.new(3, 'Diamonds')
-])
-puts hand.evaluate == 'Four of a kind'
+King.new.announce_self
+Queen.new.announce_self
+Squire.new.announce_self
+Royal.new.announce_self
 
-hand = PokerHand.new([
-  Card.new(3, 'Hearts'),
-  Card.new(3, 'Clubs'),
-  Card.new(5, 'Diamonds'),
-  Card.new(3, 'Spades'),
-  Card.new(5, 'Hearts')
-])
-puts hand.evaluate == 'Full house'
+=begin
+What do the method calls on lines 32-35 output? Explain why the code outputs what it does. What concept is exemplified by this code?
 
-hand = PokerHand.new([
-  Card.new(10, 'Hearts'),
-  Card.new('Ace', 'Hearts'),
-  Card.new(2, 'Hearts'),
-  Card.new('King', 'Hearts'),
-  Card.new(3, 'Hearts')
-])
-puts hand.rank_tally
-puts hand.evaluate
-puts hand.evaluate == 'Flush'
+- They each print out the individual value of @title for the class
+- The method is called from within the class
+- For each object that calls it, the method checks their @title and outputs the appropriate message
+- This exemplifies polymorphism, the concept where different types of data respond to a common interface
 
-# hand = PokerHand.new([
-#   Card.new(8,      'Clubs'),
-#   Card.new(9,      'Diamonds'),
-#   Card.new(10,     'Clubs'),
-#   Card.new(7,      'Hearts'),
-#   Card.new('Jack', 'Clubs')
-# ])
-# puts hand.evaluate == 'Straight'
+Rubric
+Correct output - 1 point
+Identification of Polymorphism - 1 point
+Explanation of how @title is different for each class and how the in class initialize methods overwrite the module one - 1 point
+Explanation of how Ruby searches the direct lexical context of the class, then the module for the method call - 1 point
+=end
 
-# hand = PokerHand.new([
-#   Card.new('Queen', 'Clubs'),
-#   Card.new('King',  'Diamonds'),
-#   Card.new(10,      'Clubs'),
-#   Card.new('Ace',   'Hearts'),
-#   Card.new('Jack',  'Clubs')
-# ])
-# puts hand.evaluate == 'Straight'
+# The use cases of modules. (Namespacing)
 
-# hand = PokerHand.new([
-#   Card.new(3, 'Hearts'),
-#   Card.new(3, 'Clubs'),
-#   Card.new(5, 'Diamonds'),
-#   Card.new(3, 'Spades'),
-#   Card.new(6, 'Diamonds')
-# ])
-# puts hand.evaluate == 'Three of a kind'
+module Athletes
+  class Runner
+    def do_work
+      puts "I'm running on the track!"
+    end
+  end
+end
 
-# hand = PokerHand.new([
-#   Card.new(9, 'Hearts'),
-#   Card.new(9, 'Clubs'),
-#   Card.new(5, 'Diamonds'),
-#   Card.new(8, 'Spades'),
-#   Card.new(5, 'Hearts')
-# ])
-# puts hand.evaluate == 'Two pair'
+module FoodStaff
+  class Runner
+    def do_work
+      puts "I'm getting the orders!"
+    end
+  end
+end
 
-# hand = PokerHand.new([
-#   Card.new(2, 'Hearts'),
-#   Card.new(9, 'Clubs'),
-#   Card.new(5, 'Diamonds'),
-#   Card.new(9, 'Spades'),
-#   Card.new(3, 'Diamonds')
-# ])
-# puts hand.evaluate == 'Pair'
+# add code here
+person1.do_work #=> "I'm running on the track!"
+# add code here
+person2.do_work #=> "I'm getting the orders!"
 
-# hand = PokerHand.new([
-#   Card.new(2,      'Hearts'),
-#   Card.new('King', 'Clubs'),
-#   Card.new(5,      'Diamonds'),
-#   Card.new(9,      'Spades'),
-#   Card.new(3,      'Diamonds')
-# ])
-# puts hand.evaluate == 'High card'
+=begin
+Examine the following code:
+
+How would you edit the code without editing any of the module or class definitions in order to produce the desired output?
+What use case of modules does this code exemplify? What are some of it's benefits?
+
+  - Change it to FoodStaff::Runner and Athlete::Runner
+  - Exemplifies Namespacing
+  - Namespacing allows you to use similarly named classes within code
+  - Namespacing allows you to group related classes
+
+Proper changes - 1 point
+Identify namespacing correctly - 1 point
+Identify at least 1 benefit - 1 point
+=end
+
+# The #== method
+class Car
+  attr_reader :model, :speed
+
+  def initialize(model, speed)
+    @model = model
+    @speed = speed
+  end
+end
+
+ford = Car.new("Ford", 55)
+benz = Car.new("Benz", 55.00)
+
+puts ford == benz
+puts ford.model == benz.model
+puts ford.speed == benz.speed
+
+=begin
+What does each line output? How do the #== methods on each line differ from one another? Why are they different? 
+
+- outputs false, false, true
+- In the first line the Object itself is being compared to see if it is the same one
+- In the second line the instance variable @model of each object is being compared
+- In the third, the instance variable @speed is being compared
+- The == method in the first line comes from the BasicObject class and is checking to see if the two items are the same object
+- The == method in the second lin ecomes from the String class and is seeing if they are the same string
+- The == method from the third line comes from the Integer class and is checking if the two values are the same, even though they are not the exact same the == method for the Integer class can compare the value of floats and integers
+
+Correct output - 1 point
+Identify that that the first line checks if the compared objects are the same - 1 point
+Identify that the instance variables @model and @speed are being compared on the other 2 lines - 1 point
+Properly identify that the #== method called is based on the value it is called on (integer for integer, string for string, etc) - 1 point
+Explain how the #== method comes from BasicObject, but is overwritten by Integer and String in the other cases - 1 point
+=end
