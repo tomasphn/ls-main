@@ -1,0 +1,1 @@
+This is my repository for any course materials I work on for LaunchSchool's RB track. Each lesson's work is split into folders. Any practice problems are completed in the practice_problems folder. playground.rb is where I test code and do small problems that I don't think are worth saving. This repository is mainly for self use, but feel free to look around.
