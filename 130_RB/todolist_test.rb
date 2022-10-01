@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require "minitest/reporters"
 Minitest::Reporters.use!
 require 'minitest/autorun'
@@ -18,19 +20,19 @@ class TodoListTest < MiniTest::Test
   end
 
   def test_to_a
-    assert_equal(@todos, @list.to_a)
+    assert_equal @todos, @list.to_a
   end
 
   def test_size
-    assert_equal(3, @list.size)
+    assert_equal 3, @list.size
   end
 
   def test_first
-    assert_equal(@todo1, @list.first)
+    assert_equal @todo1, @list.first
   end
 
   def test_last
-    assert_equal(@todo3, @list.last)
+    assert_equal @todo3, @list.last
   end
 
   def test_shift
