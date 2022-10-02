@@ -1,12 +1,15 @@
-# Replace the two `method_name` placeholders with actual method calls
-def convert_to_base_8(n)
-  n.method_name.method_name
+ten = Enumerator.new do |y|
+  counter = 0
+  accumulator = 1
+  loop do
+    accumulator = counter.zero? ? 1 : accumulator * counter
+    y << accumulator
+    counter += 1
+  end
 end
 
-# Replace `argument` with the correct argument below
-# `method` is `Object#method`, not a placeholder
-base8_proc = method(argument).to_proc
-
-# We'll need a Proc object to make this code work
-# Replace `a_proc` with the correct object
-[8, 10, 12, 14, 16, 33].map(&a_proc) 
+ten.each do |x, y|
+  puts "x: #{x}"
+  puts "y: #{y}"
+  break if x > 5 
+end
