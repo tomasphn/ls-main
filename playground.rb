@@ -1,25 +1,8 @@
-class Cipher
-  LETTERS = 26
-  CAPITAL_RANGE = (65..90)
-  LOWERCASE_RANGE = (97..122)
-
-  def self.rotate(string, rotation_size)
-    @rotation_size = rotation_size
-    rotated_chars = string.chars.map do |char|
-      find_ord(char).chr
-    end
-
-    rotated_chars.join
-  end
-
-  def self.find_ord(char)
-    return char unless char =~ /[a-zA-Z]/
-
-    rotated_ord = char.ord + @rotation_size
-    if CAPITAL_RANGE.include?(char.ord)
-      rotated_ord > CAPITAL_RANGE.last ? (rotated_ord - LETTERS) : rotated_ord
-    else
-      rotated_ord > LOWERCASE_RANGE.last ? (rotated_ord - LETTERS) : rotated_ord
-    end
-  end
-end
+CREATE TABLE orders (
+  id serial,
+  customer_name varchar(100) NOT NULL,
+  burger varchar(50),
+  side varchar(50),
+  drink varchar(50),
+  order_total decimal(4,2) NOT NULL
+);
