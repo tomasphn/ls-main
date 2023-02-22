@@ -12,7 +12,6 @@ class Hand
 
   def to_s
     cards.join(', ')
-    # add an "and" to second to last element.
   end
 
   def total_value
@@ -275,7 +274,7 @@ class Game
   end
 
   def display_participants_hands
-    participants.each(&display_hand)
+    participants.each(&:display_hand)
   end
 
   def display_opening_hand
