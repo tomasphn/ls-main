@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form action="#" method="post">
+    <fieldset>
+      <dl>
+        <dt>
+          <label for="movie">Movie</label>
+        </dt>
+        <dd>
+          <select name="movie" id="movie" size="4">
+            <option value="Alien" selected>Alien</option>
+            <option value="Looper">Looper</option>
+            <option value="Tommy Boy" selected>Tommy Boy</option>
+            <option value="Frozen" selected>Frozen</option>
+          </select>
+        </dd>
+        <dt>
+          <label for="rating">Rating</label>
+        </dt>
+        <dd>
+          <input type="number" id="rating" name="rating" min="1" max="5" value="1">
+        </dd>
+        <dt>
+          <input type="checkbox" id="favorite" name="favorite" checked>Add to my favorites
+        </dt>
+      </dl>
+      <input type="submit" value="Rate Movie">
+    </fieldset>
+  </form>
+
+  <form action="#" method="get">
+    <fieldset>
+      <dl>
+        <dt><label for="category">Category</label></dt>
+        <dd>
+          <select name="category" size="5" id="category">
+            <option value="core">Core</option>
+            <option value="plugins">Plugins and Libraries</option>
+            <option value="conventions">Conventions</option>
+            <option value="reviews">Reviews</option>
+            <option value="opinion">Opinion</option>
+            <option value="people">People</option>
+          </select>
+        </dd>
+  
+        <dt><label for="tags">Tags</label></dt>
+        <dd>
+          <select name="tags" id="tags" size="5" multiple>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">Javascript</option>
+            <option value="ruby">Ruby</option>
+            <option value="rails">Rails</option>
+            <option value="python">Python</option>
+            <option value="django">Django</option>
+          </select>
+        </dd>
+      </dl>
+  
+      <input type="submit" value="Filter">
+      <input type="reset">
+    </fieldset>
+  </form>
+</body>
+</html>
